@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div 
+        <h2>Edit name Information</h2>
+        <form action="/items/<%= id %>" method="POST">
+
+          <div>
+            <div>
+              <span id="inputGroup-sizing-default">name</span>
+            </div>
+            <input name="name" value="<%= name %>" type="text">
+          </div>
+          <label for="warehouse">Select a Warehouse:</label>
+          <select name="warehouse" id="warehouse">
+
+            <option value=""></option>
+            <% for(let warehouse of warehouses) { %>
+              <option value="<%= warehouse %>">
+                <%= warehouse %>
+              </option>
+              <% } %>
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+</body>
+
+</html>
