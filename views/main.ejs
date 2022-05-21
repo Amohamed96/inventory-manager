@@ -2,46 +2,46 @@
 <html lang="en">
 
 <body>
+    <%- include('header') %>
+
       <h3>items</h3>
 
-      <table class="table">
-        <thead>
+    <table class="table">
+      <thead>
+        <tr >
+          <th  style="padding-right: 1em">SKU</th>
+          <th  style="padding-right: 2em">name</th>
+          <th  style="padding-right: 1em">warehouse</th>
+          <th  style="padding-right: 1em">Edit</th>
+          <th  style="padding-right: 1em">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let id in items) { %>
           <tr>
-            <th scope="col">Code</th>
-            <th scope="col">name</th>
-            <th scope="col">warehouse</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <td style="padding-right: 2em">
+              <%= items[id].SKU %>
+            </td>
+            <td  style="padding-right: 1em">
+              <%= items[id].name %>
+            </td>
+            <td  style="padding-right: 1em">
+              <%= items[id].warehouse ? items[id].warehouse : "Unassigned" %>
+            </td>
+            <td  style="padding-right: 1em">
+              <form method="get" action="/items/<%= id %>">
+                <button type="submit">Edit</button>
+              </form>
+            </td>
+            <td  style="padding-right: 1em">
+              <form method="POST" action="/items/<%= id %>/delete">
+                <button type="submit">Delete</button>
+              </form>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% for(let ID in items) { %>
-            <tr>
-              <td>
-                <%= items[ID].code %>
-              </td>
-              <td>
-                <%= items[ID].name %>
-              </td>
-              <td>
-                <%= items[ID].warehouse ? items[ID].warehouse : "Unassigned" %>
-              </td>
-              <!-- creating edit and delete buttons below -->
-              <td>
-                <form method="get" action="/item/<%= ID %>">
-                  <button type="submit">Edit!</button>
-                </form>
-              </td>
-              <td>
-                <form method="POST" action="/item/<%= ID %>/delete">
-                  <button type="submit">Delete!</button>
-                </form>
-              </td>
-              <!-- End -->
-            </tr>
-            <% } %>
-        </tbody>
-      </table>
+          <% } %>
+      </tbody>
+    </table>
 </body>
 
 </html>
