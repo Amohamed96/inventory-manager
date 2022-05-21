@@ -6,10 +6,11 @@ This application tracks the inventory of certain warehouses. A user can create i
 
 ## Dependencies
 
-Node.js
-Express
-EJS
-body-parser
+- Express
+- EJS
+- body-parser
 
-npm install or npm i
-npm start to run the server
+## Setup
+
+- npm install or npm i
+- npm start to run the server
