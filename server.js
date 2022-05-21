@@ -1,67 +1,81 @@
-const router = require("express").Router();
-const item = require("./items");
+const PORT = 3001;
+const items = require("./items");
 
-let itemDirectory = item;
+const express = require("express");
+const bodyParser = require("body-parser");
 
-router.get("/item", function (req, res) {
-  res.send(itemDirectory);
+const app = express();
+
+// initial database
+
+const warehouses = ["Warehouse 1", "Warehouse 2", "Warehouse 3"];
+
+// CRUD actions start below
+//------------------------------------------------
+
+// GET items main page
+app.get("/", (req, res) => {
+  const templateVars = { items };
+  res.render("main", templateVars);
 });
 
-router.get("/item/:id", function (req, res) {
-  const { id } = req.params;
-
-  const item = itemDirectory.find((b) => b.ID === id);
-  if (!item) return res.status(404).send("Item does not exists");
-
-  res.send(item);
+// GET "create an items item" page
+app.get("/new", (req, res) => {
+  const templateVars = { warehouses };
+  res.render("items_new", templateVars);
 });
 
-router.post("/item", function (req, res) {
-  const { itemName, ID, warehouse } = req.body;
+// GET "create a warehouse" page
+app.get("/warehouse/new", (req, res) => {
+  res.render("warehouse_new");
+});
 
-  const itemExist = itemDirectory.find((b) => b.ID === ID);
-  if (itemExist) return res.send("Item already exists");
+// GET "Edit an items item" page
+app.get("/items/:ID", (req, res) => {
+  const ID = req.params.ID;
+  const templateVars = { ...items[ID], warehouses };
+  res.render("items_edit", templateVars);
+});
 
-  const item = {
-    itemName,
+// Update product information
+app.post("/items/:id", (req, res) => {
+  const ID = req.params.id;
+  items[ID].product = req.body.product;
+  items[ID].qty = req.body.qty;
+  items[ID].location = req.body.warehouse;
+  items[ID].price = req.body.price;
+  res.redirect("/");
+});
+
+// Create new product
+app.post("/new", (req, res) => {
+  const ID = Number(Object.keys(items).pop()) + 1; // this will be the ID of the new product
+  items[ID] = {
     ID,
-    warehouse,
+    code: generateRandomString(),
+    product: req.body.product,
+    qty: req.body.qty,
+    location: req.body.warehouse,
+    price: req.body.price,
   };
-  itemDirectory.push(item);
-
-  res.send(item);
-});
-router.put("/item/:id", function (req, res) {
-  const { id } = req.params;
-  const { itemName, ID, warehouse } = req.body;
-
-  let book = itemDirectory.find((b) => b.ID === id);
-  if (!book) return res.status(404).send("Book does not exist");
-
-  const updateField = (val, prev) => (!val ? prev : val);
-
-  const updatedItem = {
-    ...item,
-    itemName: updateField(itemName, item.itemName),
-    ID: updateField(ID, item.ID),
-    currentWarehouse: updateField(currentWarehouse, item.currentWarehouse),
-  };
-
-  const itemIndex = itemsDirectory.findIndex((b) => b.ID === item.ID);
-  itemDirectory.splice(itemIndex, 1, updatedItem);
-
-  res.status(200).send(updatedItem);
+  res.redirect("/");
 });
 
-router.delete("/items/:id", function (req, res) {
-  const { id } = req.params;
-
-  let item = itemDirectory.find((b) => b.ID === id);
-  if (!item) return res.status(404).send("item does not exist");
-
-  itemDirectory = itemDirectory.filter((b) => b.ID !== id);
-
-  res.send("Success");
+// Create new warehouse
+app.post("/warehouse/new", (req, res) => {
+  const warehouse = req.body.warehouse;
+  warehouses.push(warehouse);
+  res.redirect("/");
 });
 
-module.exports = router;
+// Delete product
+app.post("/items/:id/delete", (req, res) => {
+  const ID = req.params.id;
+  delete items[ID];
+  res.redirect(`/`);
+});
+
+// Active port
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
+});

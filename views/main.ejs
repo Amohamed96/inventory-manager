@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+      <h3>items</h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Code</th>
+            <th scope="col">name</th>
+            <th scope="col">warehouse</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let ID in items) { %>
+            <tr>
+              <td>
+                <%= items[ID].code %>
+              </td>
+              <td>
+                <%= items[ID].name %>
+              </td>
+              <td>
+                <%= items[ID].warehouse ? items[ID].warehouse : "Unassigned" %>
+              </td>
+              <!-- creating edit and delete buttons below -->
+              <td>
+                <form method="get" action="/item/<%= ID %>">
+                  <button type="submit">Edit!</button>
+                </form>
+              </td>
+              <td>
+                <form method="POST" action="/item/<%= ID %>/delete">
+                  <button type="submit">Delete!</button>
+                </form>
+              </td>
+              <!-- End -->
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+</body>
+
+</html>
