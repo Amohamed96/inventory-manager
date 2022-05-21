@@ -10,8 +10,9 @@
       <thead>
         <tr >
           <th  style="padding-right: 1em">SKU</th>
-          <th  style="padding-right: 2em">name</th>
-          <th  style="padding-right: 1em">warehouse</th>
+          <th  style="padding-right: 2em">Name</th>
+          <th  style="padding-right: 1em">Warehouse</th>
+          <th style="padding-right: 1em">Units</th>
           <th  style="padding-right: 1em">Edit</th>
           <th  style="padding-right: 1em">Delete</th>
         </tr>
@@ -28,6 +29,9 @@
             <td  style="padding-right: 1em">
               <%= items[id].warehouse ? items[id].warehouse : "Unassigned" %>
             </td>
+            <td style="padding-right: 1em">
+              <%= items[id].units %>
+             </td>
             <td  style="padding-right: 1em">
               <form method="get" action="/items/<%= id %>">
                 <button type="submit">Edit</button>

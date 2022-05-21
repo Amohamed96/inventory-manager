@@ -34,6 +34,7 @@ app.post("/items/:id", (req, res) => {
   const id = req.params.id;
   items[id].name = req.body.name;
   items[id].warehouse = req.body.warehouse;
+  items[id].units = req.body.units;
   res.redirect("/");
 });
 
@@ -44,6 +45,7 @@ app.post("/new", (req, res) => {
     SKU: generateSKU(),
     name: req.body.name,
     warehouse: req.body.warehouse,
+    units: req.body.units,
   };
   res.redirect("/");
 });
