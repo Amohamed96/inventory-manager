@@ -16,7 +16,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/new", (req, res) => {
-  const templateVars = { warehouses };
+  const ID = req.params.id;
+  const templateVars = { ...items[ID], items, warehouses };
   res.render("new_item", templateVars);
 });
 

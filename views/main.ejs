@@ -4,15 +4,16 @@
 <body>
     <%- include('header') %>
 
-      <h3>items</h3>
+      <h3>Inventory</h3>
 
     <table class="table">
       <thead>
         <tr >
+          <th style="padding-right: 1em">ID</th>
           <th  style="padding-right: 1em">SKU</th>
           <th  style="padding-right: 2em">Name</th>
           <th  style="padding-right: 1em">Warehouse</th>
-          <th style="padding-right: 1em">Units</th>
+          <th  style="padding-right: 1em">Units</th>
           <th  style="padding-right: 1em">Edit</th>
           <th  style="padding-right: 1em">Delete</th>
         </tr>
@@ -20,6 +21,9 @@
       <tbody>
         <% for(let id in items) { %>
           <tr>
+            <td style="padding-right: 2em">
+              <%= items[id].id %>
+            </td>
             <td style="padding-right: 2em">
               <%= items[id].SKU %>
             </td>
